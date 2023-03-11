@@ -1,9 +1,11 @@
 import * as THREE from "./build/three.module.js";
 import { OrbitControls } from "./controls/OrbitControls.js";
+import GUI from "https://cdn.jsdelivr.net/npm/lil-gui@0.18/+esm";
 
 /**
  * UIデバッグ
  */
+const gui = new GUI();
 
 //シーン
 const scene = new THREE.Scene();
@@ -34,6 +36,36 @@ const material = new THREE.MeshBasicMaterial({
 //メッシュ化
 const box = new THREE.Mesh(boxGeometry, material);
 scene.add(box);
+
+/* デバックフォルダー
+   ----------------------------------------------------------------- */
+const positionFolder = gui.addFolder("Position");
+
+/* UIデバック
+   ----------------------------------------------------------------- */
+positionFolder
+  .add(box.position, "x")
+  .min(-3)
+  .max(3)
+  .step(0.01)
+  .name("transformX");
+positionFolder
+  .add(box.position, "y")
+  .min(-3)
+  .max(3)
+  .step(0.01)
+  .name("transformY");
+positionFolder
+  .add(box.position, "z")
+  .min(-3)
+  .max(3)
+  .step(0.01)
+  .name("transformZ");
+
+gui.add(box, "visible");
+gui.add(material, "wireframe");
+
+gui.addColor(material, "color");
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
